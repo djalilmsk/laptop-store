@@ -3,6 +3,9 @@
 ```sh
 npm create vite@latest project-name
 cd project-name
+```
+- install the node module and run the project
+```sh
 npm i
 npm run dev
 ```
