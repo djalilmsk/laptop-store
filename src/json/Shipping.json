@@ -1,0 +1,6 @@
+{
+  "shipping": [
+    { "id": 1, "place": "bureau" },
+    { "id": 2, "place": "domicile" }
+  ]
+}

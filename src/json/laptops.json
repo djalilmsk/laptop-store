@@ -1,0 +1,198 @@
+{
+  "laptops": [
+    {
+      "model": "Dell XPS 13",
+      "specs": {
+        "processor": "Intel Core i7-1165G7",
+        "ramSize": 16,
+        "ramType": "DDR4",
+        "ramSpeed": 3200,
+        "gpu": "Intel Iris Xe Graphics",
+        "storage": 512,
+        "displaySize": 13.3,
+        "displayQuality": "Full HD",
+        "displayType": "LED"
+      },
+      "images": ["dell_xps_13_front.jpg", "dell_xps_13_side.jpg"],
+      "category": "bureauatique",
+      "description": "High-performance laptop for productivity and office use.",
+      "price": 1200,
+      "id": 293
+    },
+    {
+      "model": "MacBook Air M2",
+      "specs": {
+        "processor": "Apple M2",
+        "ramSize": 8,
+        "ramType": "Unified",
+        "ramSpeed": 0,
+        "gpu": "Apple 8-core GPU",
+        "storage": 256,
+        "displaySize": 13.6,
+        "displayQuality": "Retina",
+        "displayType": "IPS"
+      },
+      "images": ["macbook_air_m2_front.jpg", "macbook_air_m2_side.jpg"],
+      "category": "etudiant",
+      "description": "Lightweight and portable laptop for students.",
+      "price": 999,
+      "id": 243
+    },
+    {
+      "model": "Lenovo ThinkPad X1 Carbon",
+      "specs": {
+        "processor": "Intel Core i5-1135G7",
+        "ramSize": 16,
+        "ramType": "DDR4",
+        "ramSpeed": 3200,
+        "gpu": "Intel Iris Xe Graphics",
+        "storage": 512,
+        "displaySize": 14,
+        "displayQuality": "Full HD",
+        "displayType": "LED"
+      },
+      "images": ["thinkpad_x1_front.jpg", "thinkpad_x1_side.jpg"],
+      "category": "bureauatique",
+      "description": "Durable and secure laptop for business professionals.",
+      "price": 1300,
+      "id": 143
+    },
+    {
+      "model": "ASUS ROG Zephyrus G14",
+      "specs": {
+        "processor": "AMD Ryzen 9 5900HS",
+        "ramSize": 16,
+        "ramType": "DDR4",
+        "ramSpeed": 3200,
+        "gpu": "NVIDIA GeForce RTX 3060",
+        "storage": 1024,
+        "displaySize": 14,
+        "displayQuality": "QHD",
+        "displayType": "IPS"
+      },
+      "images": ["rog_zephyrus_g14_front.jpg", "rog_zephyrus_g14_side.jpg"],
+      "category": "gaming",
+      "description": "Powerful gaming laptop with high-end performance.",
+      "price": 1600,
+      "id": 245
+    },
+    {
+      "model": "HP Spectre x360",
+      "specs": {
+        "processor": "Intel Core i7-1165G7",
+        "ramSize": 16,
+        "ramType": "LPDDR4",
+        "ramSpeed": 3733,
+        "gpu": "Intel Iris Xe Graphics",
+        "storage": 512,
+        "displaySize": 13.3,
+        "displayQuality": "4K UHD",
+        "displayType": "OLED"
+      },
+      "images": ["hp_spectre_x360_front.jpg", "hp_spectre_x360_side.jpg"],
+      "category": "bureauatique",
+      "description": "Premium 2-in-1 laptop with stunning visuals.",
+      "price": 1400,
+      "id": 123
+    },
+    {
+      "model": "Acer Aspire 5",
+      "specs": {
+        "processor": "AMD Ryzen 5 4500U",
+        "ramSize": 8,
+        "ramType": "DDR4",
+        "ramSpeed": 2400,
+        "gpu": "AMD Radeon Graphics",
+        "storage": 256,
+        "displaySize": 15.6,
+        "displayQuality": "Full HD",
+        "displayType": "LED"
+      },
+      "images": ["acer_aspire_5_front.jpg", "acer_aspire_5_side.jpg"],
+      "category": "etudiant",
+      "description": "Affordable laptop with decent performance.",
+      "price": 500,
+      "id": 209
+    },
+    {
+      "model": "MSI GE76 Raider",
+      "specs": {
+        "processor": "Intel Core i9-11980HK",
+        "ramSize": 32,
+        "ramType": "DDR4",
+        "ramSpeed": 3200,
+        "gpu": "NVIDIA GeForce RTX 3080",
+        "storage": 2048,
+        "displaySize": 17.3,
+        "displayQuality": "4K UHD",
+        "displayType": "IPS"
+      },
+      "images": ["msi_ge76_raider_front.jpg", "msi_ge76_raider_side.jpg"],
+      "category": "gaming",
+      "description": "Ultimate gaming laptop for enthusiasts.",
+      "price": 3000,
+      "id": 223
+    },
+    {
+      "model": "Surface Laptop 4",
+      "specs": {
+        "processor": "AMD Ryzen 7 4980U",
+        "ramSize": 16,
+        "ramType": "LPDDR4",
+        "ramSpeed": 2400,
+        "gpu": "AMD Radeon Graphics",
+        "storage": 512,
+        "displaySize": 15,
+        "displayQuality": "PixelSense",
+        "displayType": "IPS"
+      },
+      "images": ["surface_laptop_4_front.jpg", "surface_laptop_4_side.jpg"],
+      "category": "work",
+      "description": "Elegant laptop designed for productivity.",
+      "price": 1400,
+      "id": 240
+    },
+    {
+      "model": "Razer Blade 15",
+      "specs": {
+        "processor": "Intel Core i7-11800H",
+        "ramSize": 16,
+        "ramType": "DDR4",
+        "ramSpeed": 3200,
+        "gpu": "NVIDIA GeForce RTX 3070",
+        "storage": 1024,
+        "displaySize": 15.6,
+        "displayQuality": "QHD",
+        "displayType": "IPS"
+      },
+      "images": ["razer_blade_15_front.jpg", "razer_blade_15_side.jpg"],
+      "category": "gaming",
+      "description": "Sleek and powerful laptop for gamers.",
+      "price": 2200,
+      "id": 299
+    },
+    {
+      "model": "LG Gram 17",
+      "specs": {
+        "processor": "Intel Core i7-1165G7",
+        "ramSize": 16,
+        "ramType": "LPDDR4",
+        "ramSpeed": 4266,
+        "gpu": "Intel Iris Xe Graphics",
+        "storage": 1024,
+        "displaySize": 17,
+        "displayQuality": "WQXGA",
+        "displayType": "IPS"
+      },
+      "images": ["lg_gram_17_front.jpg", "lg_gram_17_side.jpg"],
+      "category": "etudiant",
+      "description": "Ultra-light laptop with large display.",
+      "price": 1800,
+      "id": 288
+    }
+  ],
+  "info": {
+    "pages": 1,
+    "maxPage": 10
+  }
+}

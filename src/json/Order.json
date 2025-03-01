@@ -1,0 +1,159 @@
+{
+  "orders": {
+    "head": ["Model", "Price", "Phone", "Wilaya"],
+    "rows": {
+      "shipping": [
+        {
+          "productModel": "Dell XPS 13",
+          "price": "120000",
+          "customerPhone": "+213999999999",
+          "wilaya": "Constantine",
+          "id": "ORDER12345"
+        }
+      ],
+      "in_review": [
+        {
+          "productModel": "MacBook Air M2",
+          "price": "99900",
+          "customerPhone": "+213555555555",
+          "wilaya": "Alger",
+          "id": "ORDER22345"
+        }
+      ],
+      "delivered": [
+        {
+          "productModel": "ASUS ROG Zephyrus G14",
+          "price": "160000",
+          "customerPhone": "+213666666666",
+          "wilaya": "Alger",
+          "id": "ORDER32345"
+        }
+      ]
+    }
+  },
+  "singleOrder": [
+    {
+      "id": "ORDER12345",
+      "date": "2023-10-01T14:30:00Z",
+      "status": "shipping",
+      "total_amount": 120500,
+      "customer": {
+        "customer_id": "CUST67890",
+        "full_name": "Mohamed plk",
+        "phone_number": "+213999999999",
+        "address": "Ali Mendjeli, Constantine",
+        "wilaya": "Constantine"
+      },
+      "items": [
+        {
+          "model": "Dell XPS 13",
+          "specs": {
+            "processor": "Intel Core i7-1165G7",
+            "ramSize": 16,
+            "ramType": "DDR4",
+            "ramSpeed": 3200,
+            "gpu": "Intel Iris Xe Graphics",
+            "storage": 512,
+            "displaySize": 13.3,
+            "displayQuality": "Full HD",
+            "displayType": "LED"
+          },
+          "images": ["dell_xps_13_front.jpg", "dell_xps_13_side.jpg"],
+          "category": "bureauatique",
+          "description": "High-performance laptop for productivity and office use.",
+          "price": 120000,
+          "id": 293
+        }
+      ],
+      "shipping": {
+        "shipping_method": "domicile",
+        "tracking_number": "TRACK123456789",
+        "wilaya": "Constantine",
+        "shipping_cost": 500
+      },
+      "notes": "Handle with care. Fragile item."
+    },
+    {
+      "id": "ORDER22345",
+      "date": "2023-10-02T10:15:00Z",
+      "status": "in review",
+      "total_amount": 100200,
+      "customer": {
+        "customer_id": "CUST54321",
+        "full_name": "Karim kzd",
+        "phone_number": "+213555555555",
+        "address": "Boulevard Zighoud Youcef, Alger",
+        "wilaya": "Alger"
+      },
+      "items": [
+        {
+          "model": "MacBook Air M2",
+          "specs": {
+            "processor": "Apple M2",
+            "ramSize": 8,
+            "ramType": "Unified",
+            "ramSpeed": 0,
+            "gpu": "Apple 8-core GPU",
+            "storage": 256,
+            "displaySize": 13.6,
+            "displayQuality": "Retina",
+            "displayType": "IPS"
+          },
+          "images": ["macbook_air_m2_front.jpg", "macbook_air_m2_side.jpg"],
+          "category": "etudiant",
+          "description": "Lightweight and portable laptop for students.",
+          "price": 99900,
+          "id": 243
+        }
+      ],
+      "shipping": {
+        "shipping_method": "bureau",
+        "tracking_number": "TRACK987654321",
+        "wilaya": "Alger",
+        "shipping_cost": 300
+      },
+      "notes": ""
+    },
+    {
+      "id": "ORDER32345",
+      "date": "2023-10-03T16:45:00Z",
+      "status": "delivered",
+      "total_amount": 160300,
+      "customer": {
+        "customer_id": "CUST11223",
+        "full_name": "Amar ole",
+        "phone_number": "+213666666666",
+        "address": "Rue Didouche Mourad, Alger",
+        "wilaya": "Alger"
+      },
+      "items": [
+        {
+          "model": "ASUS ROG Zephyrus G14",
+          "specs": {
+            "processor": "AMD Ryzen 9 5900HS",
+            "ramSize": 16,
+            "ramType": "DDR4",
+            "ramSpeed": 3200,
+            "gpu": "NVIDIA GeForce RTX 3060",
+            "storage": 1024,
+            "displaySize": 14,
+            "displayQuality": "QHD",
+            "displayType": "IPS"
+          },
+          "images": ["rog_zephyrus_g14_front.jpg", "rog_zephyrus_g14_side.jpg"],
+          "category": "gaming",
+          "description": "Powerful gaming laptop with high-end performance.",
+          "price": 160000,
+          "id": 245
+        }
+      ],
+      "shipping": {
+        "shipping_method": "bureau",
+        "tracking_number": "TRACK456789123",
+        "wilaya": "Alger",
+        "shipping_cost": 300
+      },
+      "notes": "Delivered successfully. Customer satisfied."
+    }
+  ]
+}

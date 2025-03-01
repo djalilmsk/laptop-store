@@ -1,0 +1,26 @@
+{
+  "category": [
+    { "id": 1, "name": "all", "value": "none" },
+    { "id": 2, "name": "etudiant" },
+    { "id": 3, "name": "bureautique" },
+    { "id": 4, "name": "gaming" },
+    { "id": 5, "name": "work" }
+  ],
+  "brand": [
+    { "id": 1, "name": "all", "value": "none" },
+    { "id": 2, "name": "Dell" },
+    { "id": 3, "name": "HP" },
+    { "id": 4, "name": "Asus" },
+    { "id": 5, "name": "MacBook" },
+    { "id": 6, "name": "Lenovo" },
+    { "id": 7, "name": "Acer" },
+    { "id": 8, "name": "Microsoft" },
+    { "id": 9, "name": "MSI" }
+  ],
+  "sort": [
+    { "id": 1, "name": "Random", "value": "none" },
+    { "id": 2, "name": "Price Ascending", "value": "price" },
+    { "id": 3, "name": "Price Descending", "value": "-price" },
+    { "id": 4, "name": "Price & Model Name (A-Z)", "value": "price,model" }
+  ]
+}
