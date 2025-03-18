@@ -73,7 +73,7 @@ function OrdersPage() {
             <TableBody>
               {orders.rows.length ? (
                 orders.rows.map((order, index) => (
-                  <OrderRow key={index} order={order.order} />
+                  <OrderRow key={index} order={order.Order} />
                 ))
               ) : (
                 <TableRow>
@@ -103,25 +103,25 @@ function OrderRow({ order }) {
   return (
     <TableRow>
       <TableCell className="max-w-32 overflow-x-auto text-nowrap">
-        {order._id}
+        {order.id}
       </TableCell>
       <TableCell className="max-w-32 overflow-x-auto text-nowrap">
-        {new Date(order.orderDate).toLocaleDateString("en-US", {
+        {new Date(order.date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         })}
       </TableCell>
       <TableCell className="max-w-48 overflow-x-auto text-nowrap">
-        {order.laptops.map((item, index) => (
+        {order.items.map((item, index) => (
           <div key={index} className="flex justify-between">
-            <span className="w-1/2 overflow-x-hidden">{item.Model}</span>
-            <span>{formatPrice(+item.Price)}</span>
+            <span className="w-1/2 overflow-x-hidden">{item.model}</span>
+            <span>{formatPrice(+item.price)}</span>
           </div>
         ))}
       </TableCell>
       <TableCell className="max-w-32 overflow-x-auto text-nowrap">
-        {formatPrice(+order.OrderTotal)}
+        {formatPrice(+order.total_amount)}
       </TableCell>
       <TableCell className="max-w-32 overflow-x-auto text-nowrap">
         <Badge
@@ -132,7 +132,7 @@ function OrderRow({ order }) {
             (order.status === "delivered" && "default")
           }
         >
-          {order.orderStatus}
+          {order.status}
         </Badge>
       </TableCell>
     </TableRow>

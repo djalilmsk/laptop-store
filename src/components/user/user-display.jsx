@@ -30,7 +30,7 @@ function SidebarUserTrigger({ user }) {
       >
         <Avatar className="h-8 w-8 rounded-lg">
           <AvatarImage
-            src="https://github.com/shadcn.png"
+            src={user?.image}
             alt={user?.fullName}
           />
           <AvatarFallback>
@@ -122,7 +122,7 @@ function DropdownMenuUser({ user }) {
       <Link to="/user-dashboard">
         <Avatar className="h-8 w-8 cursor-pointer rounded-lg">
           <AvatarImage
-            src={"https://github.com/shadcn.png"} //user?.image
+            src={user?.image} //user?.image
             alt={user?.fullName}
           />
           <AvatarFallback className="rounded-lg">

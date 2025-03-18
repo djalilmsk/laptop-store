@@ -20,6 +20,7 @@ import { reduxConfig } from "@/reduxConfig";
 import { action as loginAction } from "@/components/From/LoginFrom";
 import { action as signupAction } from "@/components/From/RegisterFrom";
 import { action as checkoutAction } from "@/components/From/CheckoutFrom";
+import { action as accountAction } from "@/components/From/DataUpdateFrom";
 
 // import { loader as checkoutLoader } from "@/pages/Checkout";
 // import { loader as productsLoader } from "@/pages/Products";
@@ -129,6 +130,7 @@ export const dashboardChildren = [
     path: "/user-dashboard/account",
     element: <Account />,
     errorElement: <ErrorElement />,
+    action: accountAction(reduxConfig)
   },
   {
     path: "/user-dashboard/notification",
@@ -139,6 +141,6 @@ export const dashboardChildren = [
     path: "/user-dashboard/signup",
     element: <Signup />,
     errorElement: <ErrorElement />,
-    action: signupAction,
+    action: signupAction(reduxConfig),
   },
 ];

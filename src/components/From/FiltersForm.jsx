@@ -92,7 +92,7 @@ export function FiltersForm() {
                   defaultValue={[defaultMaxPrice]}
                   value={[maxValue]}
                   name="maxPrice"
-                  max={15000}
+                  max={1000000}
                   min={500}
                   step={1}
                   onValueChange={handleSliderChange}

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusCircleIcon, Save, X } from "lucide-react";
 import { customFetch } from "@/utils";
 import { Button } from "@/components/ui/button";
@@ -150,51 +150,6 @@ export const Specifications = ({ formData, handleChange }) => (
   </div>
 );
 
-// Images Component
-export const ProductImages = ({
-  images,
-  handleImageAdd,
-  handleImageDelete,
-}) => {
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      handleImageAdd(imageUrl);
-    }
-  };
-
-  return (
-    <div>
-      <label className="mb-2 block font-medium uppercase">Images</label>
-      <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5">
-        {images.map((image, index) => (
-          <div key={index} className="relative">
-            <X
-              className="absolute right-1 top-1 h-5 w-5 cursor-pointer rounded-full bg-destructive p-1 text-white"
-              onClick={() => handleImageDelete(index)}
-            />
-            <img
-              src={image}
-              className="aspect-square w-full rounded object-cover"
-              alt={`image-${index}`}
-            />
-          </div>
-        ))}
-        <div className="relative flex aspect-square items-center justify-center rounded bg-secondary">
-          <PlusCircleIcon className="h-2/3 w-2/3 text-muted-foreground dark:text-primary-foreground" />
-          <input
-            type="file"
-            accept="image/*"
-            className="absolute h-full w-full cursor-pointer opacity-0"
-            onChange={handleFileChange}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // Reusable Input Components
 export const InputField = ({
   label,
@@ -234,7 +189,69 @@ export const SpecInput = ({ label, name, type = "text", value, onChange }) => (
   </div>
 );
 
-// Main Component
+// [Previous imports remain unchanged]
+
+// BasicInfo, Specifications, InputField, and SpecInput components remain unchanged
+
+export const ProductImages = ({
+  images,
+  handleImageAdd,
+  handleImageDelete,
+}) => {
+  const [imagePreviews, setImagePreviews] = useState([]);
+
+  useEffect(() => {
+    if (!Array.isArray(images)) return;
+
+    // Clean up previous URLs
+    imagePreviews.forEach((url) => URL.revokeObjectURL(url));
+
+    const previews = images.map((image) =>
+      image instanceof File ? URL.createObjectURL(image) : image,
+    );
+    setImagePreviews(previews);
+
+    return () => previews.forEach((url) => URL.revokeObjectURL(url));
+  }, [images]);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      handleImageAdd(file); // Pass the File object directly
+    }
+  };
+
+  return (
+    <div>
+      <label className="mb-2 block font-medium uppercase">Images</label>
+      <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5">
+        {imagePreviews.map((url, index) => (
+          <div key={index} className="relative">
+            <X
+              className="absolute right-1 top-1 h-5 w-5 cursor-pointer rounded-full bg-destructive p-1 text-white"
+              onClick={() => handleImageDelete(index)}
+            />
+            <img
+              src={url}
+              className="aspect-square w-full rounded object-cover"
+              alt={`image-${index}`}
+            />
+          </div>
+        ))}
+        <div className="relative flex aspect-square items-center justify-center rounded bg-secondary">
+          <PlusCircleIcon className="h-2/3 w-2/3 text-muted-foreground dark:text-primary-foreground" />
+          <input
+            type="file"
+            accept="image/*"
+            className="absolute h-full w-full cursor-pointer opacity-0"
+            onChange={handleFileChange}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const EditProduct = ({ laptop, setEditMode = null }) => {
   const token = useSelector((state) => state.userReducer.token);
   const navigate = useNavigate();
@@ -243,7 +260,7 @@ export const EditProduct = ({ laptop, setEditMode = null }) => {
   const [formData, setFormData] = useState({
     ...laptop,
     specs: { ...laptop.specs },
-    images: laptop.images || [],
+    images: Array.isArray(laptop.images) ? [...laptop.images] : [],
   });
 
   const handleChange = (e) => {
@@ -265,10 +282,10 @@ export const EditProduct = ({ laptop, setEditMode = null }) => {
     }
   };
 
-  const handleImageAdd = (imageUrl) => {
+  const handleImageAdd = (file) => {
     setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, imageUrl],
+      images: [...prev.images, file],
     }));
   };
 
@@ -281,12 +298,37 @@ export const EditProduct = ({ laptop, setEditMode = null }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await customFetch.patch(`/laptop/${id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("model", formData.model);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("category", formData.category);
+      formDataToSend.append("description", formData.description);
+
+      formDataToSend.append("processor", formData.specs.processor);
+      formDataToSend.append("RamSize", formData.specs.RamSize);
+      formDataToSend.append("RamSpeed", formData.specs.RamSpeed);
+      formDataToSend.append("GPU", formData.specs.GPU);
+      formDataToSend.append("storage", formData.specs.storage);
+      formDataToSend.append("displaySize", formData.specs.displaySize);
+      formDataToSend.append("displayQuantity", formData.specs.displayQuality);
+      formDataToSend.append("displayType", formData.specs.displayType);
+
+      formData.images.forEach(img => {
+        formDataToSend.append("images", img);
       });
+
+      const response = await customFetch.patch(
+        `/laptop/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       if (response.data) {
         queryClient.invalidateQueries(["product", id]);
@@ -297,7 +339,9 @@ export const EditProduct = ({ laptop, setEditMode = null }) => {
       }
     } catch (error) {
       toast({
-        title: "Error: Failed to update product",
+        title: error?.response?.data?.message
+          ? `Error: ${error?.response?.data?.message}`
+          : "Error: Failed to update product",
         variant: "destructive",
       });
       console.error("Update failed:", error);
@@ -323,7 +367,7 @@ export const EditProduct = ({ laptop, setEditMode = null }) => {
         <Button
           variant="outline"
           onClick={() => {
-            setEditMode(false);
+            if (setEditMode) setEditMode(false);
             navigate(`/user-dashboard/products/${id}`);
           }}
         >
@@ -376,10 +420,10 @@ export const AddProduct = () => {
     }
   };
 
-  const handleImageAdd = (imageUrl) => {
+  const handleImageAdd = (file) => {
     setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, imageUrl],
+      images: [...prev.images, file],
     }));
   };
 
@@ -392,19 +436,40 @@ export const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await customFetch.post("/laptop", formData, {
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("model", formData.model);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("category", formData.category);
+      formDataToSend.append("description", formData.description);
+
+      formDataToSend.append("processor", formData.specs.processor);
+      formDataToSend.append("RamSize", formData.specs.RamSize);
+      formDataToSend.append("RamSpeed", formData.specs.RamSpeed);
+      formDataToSend.append("GPU", formData.specs.GPU);
+      formDataToSend.append("storage", formData.specs.storage);
+      formDataToSend.append("displaySize", formData.specs.displaySize);
+      formDataToSend.append("displayQuantity", formData.specs.displayQuality);
+      formDataToSend.append("displayType", formData.specs.displayType);
+
+      formData.images.forEach((image) => {
+        if (image instanceof File) {
+          formDataToSend.append("images", image);
+        }
+      });
+
+      const response = await customFetch.post("/laptop", formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.data) {
-        // Invalidate product list queries to reflect the new product
-        queryClient.invalidateQueries(["product"]); // Adjust key based on your product list query
+        queryClient.invalidateQueries(["product"]);
         toast({ title: "Success: Product added successfully" });
-        // Navigate to product list or new product page
-        navigate("/user-dashboard/products"); // Adjust route as needed
+        navigate("/user-dashboard/products");
       }
     } catch (error) {
       toast({

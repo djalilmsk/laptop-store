@@ -1,7 +1,8 @@
 import Orders from "@/components/order/Orders";
 import { Separator } from "@/components/ui/separator";
-
+import { QueryError } from "@/error";
 import { orders } from "@/json/Order.json";
+import { OrdersLoader } from "@/loaders/orders-loader";
 import { customFetch } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
@@ -26,13 +27,22 @@ const ordersQuery = (URL, token) => {
 function CustomersOrders() {
   const token = useSelector((state) => state.userReducer.token);
   const URL = "/Orders/";
+
   const { data, isLoading, isError, isRefetching, refetch } = useQuery(
     ordersQuery(URL, token),
   );
-  console.log(data);
+
+  if (isLoading || isRefetching) {
+    return <OrdersLoader isDashboard={true} />;
+  }
+
+  if (isError) {
+    return <QueryError refetch={refetch} />;
+  }
+
   return (
     <div>
-      <Orders orders={{ head: orders.head, rows: orders.rows.in_review }} />
+      <Orders orders={{ head: orders.head, rows: data.Orders }} />
     </div>
   );
 }

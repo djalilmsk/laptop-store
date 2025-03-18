@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -28,13 +29,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { singleOrder } from "@/json/Order.json";
-import { formatPrice } from "@/utils";
+import { customFetch, formatPrice } from "@/utils";
 import { Ellipsis } from "lucide-react";
-import { useParams } from "react-router-dom";
-import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-// Reusable TableRowItem component
+const singleOrderQuery = (ID) => {
+  return {
+    queryKey: ["Orders", ID],
+    queryFn: async () => {
+      const response = await customFetch.get(`Orders/${ID}`);
+      if (!response.data) {
+        throw new Error("No data received from the server");
+      }
+      return response.data;
+    },
+  };
+};
+
 const TableRowItem = ({ label, value }) => (
   <TableRow>
     <TableCell className="w-1/3 text-nowrap py-2 pl-0 font-semibold uppercase text-muted-foreground">
@@ -44,7 +57,6 @@ const TableRowItem = ({ label, value }) => (
   </TableRow>
 );
 
-// Mapping for badge variants
 const badgeVariantMap = {
   canceled: "destructive",
   "in review": "outline",
@@ -52,7 +64,6 @@ const badgeVariantMap = {
   delivered: "default",
 };
 
-// Customer Details Card
 const CustomerDetailsCard = ({ customer }) => (
   <Card className="w-full">
     <CardHeader>
@@ -72,7 +83,6 @@ const CustomerDetailsCard = ({ customer }) => (
   </Card>
 );
 
-// Order Details Card
 const OrderDetailsCard = ({ order }) => (
   <Card className="w-full">
     <CardHeader>
@@ -98,60 +108,96 @@ const OrderDetailsCard = ({ order }) => (
   </Card>
 );
 
-// Items Table
-const ItemsTable = ({ items }) => (
-  <div className="w-full overflow-x-auto md:col-span-2">
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {"Image Name Category Price".split(" ").map((header, index) => (
-              <TableHead key={index}>{header}</TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {items.length ? (
-            items.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <img
-                    src={item.image || "/placeholder-image.jpg"}
-                    alt={item.model}
-                    className="h-16 w-16 rounded-lg object-cover object-center"
-                  />
-                </TableCell>
-                <TableCell className="text-nowrap">{item.model}</TableCell>
-                <TableCell>{item.category}</TableCell>
-                <TableCell>{formatPrice(item.price)}</TableCell>
-              </TableRow>
-            ))
-          ) : (
+const ItemsTable = ({ items }) => {
+  const navigate = useNavigate();
+  return (
+    <div className="w-full overflow-x-auto md:col-span-2">
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={4} className="h-24 text-center">
-                No items found.
-              </TableCell>
+              {"Image Name Category Price".split(" ").map((header, index) => (
+                <TableHead key={index}>{header}</TableHead>
+              ))}
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {items.length ? (
+              items.map((item, index) => (
+                <TableRow
+                  key={index}
+                  onClick={() => {
+                    navigate(`../products/${item.id}`);
+                  }}
+                >
+                  <TableCell>
+                    <img
+                      src={item.images[0] || "/placeholder-image.jpg"}
+                      alt={item.model}
+                      className="h-16 w-16 rounded-lg object-cover object-center"
+                    />
+                  </TableCell>
+                  <TableCell className="text-nowrap">{item.model}</TableCell>
+                  <TableCell>{item.category}</TableCell>
+                  <TableCell>{formatPrice(item.price)}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} className="h-24 text-center">
+                  No items found.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 function SingleOrderPage() {
   const { id } = useParams();
-  const order = singleOrder.find((order) => order.id === id);
-  const [status, setStatus] = React.useState(order.status);
+  const { data, isLoading, isError, isRefetching, refetch } = useQuery(
+    singleOrderQuery(id),
+  );
 
-  if (!order) {
-    return <div>Order not found</div>;
+  // Set initial status to empty string and update it when data is available
+  const [status, setStatus] = useState(data?.Order?.status || "");
+
+  // Handle loading states
+  if (isLoading || isRefetching) {
+    return (
+      <Section title="Loading" description="Fetching order details...">
+        <div>Loading order...</div>
+      </Section>
+    );
   }
+
+  // Handle error state
+  if (isError) {
+    return (
+      <Section title="Error" description="Failed to load order">
+        <div>Error loading order</div>
+      </Section>
+    );
+  }
+
+  // Handle no data
+  if (!data || !data.Order) {
+    return (
+      <Section title="Not Found" description="Order not available">
+        <div>Order not found</div>
+      </Section>
+    );
+  }
+
+  const order = data.Order;
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-    // Here you can add logic to update the order status in your backend or state management
     console.log(`Order status updated to: ${newStatus}`);
+    // Add your backend update logic here
   };
 
   return (
@@ -176,7 +222,10 @@ function SingleOrderPage() {
           <DropdownMenuContent>
             <DropdownMenuLabel>Order Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup value={status} onValueChange={handleStatusChange}>
+            <DropdownMenuRadioGroup
+              value={status}
+              onValueChange={handleStatusChange}
+            >
               <DropdownMenuRadioItem value="in review">
                 In Review
               </DropdownMenuRadioItem>
@@ -194,16 +243,25 @@ function SingleOrderPage() {
             <DropdownMenuItem>Edit Items</DropdownMenuItem>
             <DropdownMenuItem>Edit Shipping</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600">Delete Order</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600">
+              Delete Order
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       <Separator className="mb-5" />
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <CustomerDetailsCard customer={order.customer} />
+        <CustomerDetailsCard
+          customer={{ ...order.customer, wilaya: order.shipping.wilaya }}
+        />
         <OrderDetailsCard order={order} />
         <ItemsTable items={order.items} />
       </div>
+      <Table>
+        <TableCaption className="flex w-full justify-center">
+          Customer Note : {order.notes}
+        </TableCaption>
+      </Table>
     </div>
   );
 }

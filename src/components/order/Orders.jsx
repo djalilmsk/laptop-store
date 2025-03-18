@@ -42,18 +42,21 @@ function Orders({
                   <TableRow
                     key={index}
                     onClick={() => {
-                      navigate(`/user-dashboard/orders/${order.id}`);
+                      navigate(`/user-dashboard/orders/${order._id}`);
                     }}
                     className="cursor-pointer"
                   >
                     <TableCell className="max-w-32 overflow-x-auto text-nowrap hover:underline">
-                      {order.productModel}
+                      {order.model}
                     </TableCell>
                     <TableCell className="max-w-32 overflow-x-auto text-nowrap">
-                      {formatPrice(+order.price)}
+                      {formatPrice(+order.totalPrice)}
                     </TableCell>
                     <TableCell className="max-w-32 overflow-x-auto text-nowrap">
-                      {formatNumber(order.customerPhone, "INTERNATIONAL")}
+                      {formatNumber(
+                        { phone: order.phone, country: "DZ" },
+                        "INTERNATIONAL",
+                      )}
                     </TableCell>
                     <TableCell className="max-w-32 overflow-x-auto text-nowrap">
                       {order.wilaya}

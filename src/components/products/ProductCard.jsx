@@ -78,9 +78,9 @@ function ProductCard({ laptop }) {
             </Link>
             <CardDescription>{laptop.category}</CardDescription>
           </div>
-          <div className="text-nowrap text-xl font-semibold">
+          <div className="text-nowrap sm:text-xl text-sm font-semibold">
             {new Intl.NumberFormat("en").format(laptop.price.toFixed(2))}
-            <span className="text-sm"> DZD</span>
+            <span className="text-xs"> DZD</span>
           </div>
         </div>
       </CardFooter>

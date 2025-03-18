@@ -81,7 +81,7 @@ function Hero() {
         <div className="flex w-full flex-col justify-center sm:justify-start sm:px-0 px-5 gap-3 sm:flex-row">
           <Link to="/products" id="img">
             <Button className="w-full sm:w-auto">
-              Buy Now <ShoppingBag className="ml-2 h-4 w-4" />
+              Buy Now {<ShoppingBag className="ml-2 h-4 w-4" />}
             </Button>
           </Link>
           <Form

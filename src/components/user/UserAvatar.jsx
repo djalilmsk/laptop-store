@@ -9,18 +9,15 @@ function UserAvatar({ userState }) {
   const userLayout = {
     email: "user@example.com",
     fullName: "user name",
-    image: "",
+    image: null,
   };
-  const { user } = userState === null ? { user: userLayout } : userState;
+  const user = userState === null ? { user: userLayout } : userState;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-6 w-6 cursor-pointer">
-          <AvatarImage
-            src={"https://github.com/shadcn.png"}
-            alt={user?.fullName}
-          />
+          <AvatarImage src={user?.image} alt={user?.fullName} />
           <AvatarFallback>
             {user?.fullName?.slice(0, 2).toUpperCase()}
           </AvatarFallback>

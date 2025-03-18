@@ -12,38 +12,49 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { customFetch } from "@/utils";
 
-export const action = () =>
+// Action remains unchanged
+export const action = (store) =>
   async function actionFunction({ request }) {
     const formData = await request.formData();
     const requestData = Object.fromEntries(formData);
+    const token = store.getState().userReducer.token;
 
     const postData = {
       email: requestData.email,
       password: requestData.newPassword,
       comfirmPassword: requestData.confirmPassword,
       fullName: `${requestData.firstName} ${requestData.lastName}`,
-      image: "https://github.com/shadcn.png",
+      image: requestData.image,
     };
 
     const URL = "/admin/signup";
     try {
-      const response = await customFetch.post(URL, postData);
-      const data = response.data.status;
-
+      const response = await customFetch.post(URL, postData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return { status: "success", message: "User has been created" };
     } catch (err) {
       return { status: "error", message: "Failed to create a user" };
     }
   };
 
-function RegisterFrom() {
+function RegisterForm() { // Fixed typo in component name from RegisterFrom to RegisterForm
   const { toast } = useToast();
   const actionData = useActionData();
   const navigation = useNavigation();
-  const [firstName, setFirstName] = useState("New");
-  const [lastName, setLastName] = useState("User");
-  const [email, setEmail] = useState("new.user@example.com");
-  const [image, setImage] = useState("");
+  
+  // Initial values as constants for easy reset
+  const INITIAL_FIRST_NAME = "New";
+  const INITIAL_LAST_NAME = "User";
+  const INITIAL_EMAIL = "new.user@example.com";
+  const INITIAL_IMAGE = "";
+
+  const [firstName, setFirstName] = useState(INITIAL_FIRST_NAME);
+  const [lastName, setLastName] = useState(INITIAL_LAST_NAME);
+  const [email, setEmail] = useState(INITIAL_EMAIL);
+  const [image, setImage] = useState(INITIAL_IMAGE);
 
   useEffect(() => {
     if (actionData) {
@@ -58,6 +69,14 @@ function RegisterFrom() {
         variant: toastText.variant,
         duration: 1000,
       });
+
+      // Reset form on success
+      if (actionData.status === "success") {
+        setFirstName(INITIAL_FIRST_NAME);
+        setLastName(INITIAL_LAST_NAME);
+        setEmail(INITIAL_EMAIL);
+        setImage(INITIAL_IMAGE);
+      }
     }
   }, [actionData, toast]);
 
@@ -65,7 +84,7 @@ function RegisterFrom() {
     <Form method="POST" className="">
       <Section
         title={"Create New Account"}
-        description="Create new admin account "
+        description="Create new admin account"
       />
       <Separator />
       <ImageUpdate
@@ -74,19 +93,23 @@ function RegisterFrom() {
           email: email,
           image: image,
         }}
+        setImage={setImage}
       />
       <Separator />
       <Section>
         <InputFullName
           setFirstState={setFirstName}
           setLastState={setLastName}
-          firstDefault="New"
-          lastDefault="User"
+          firstDefault={INITIAL_FIRST_NAME}  // Changed to use current state
+          lastDefault={INITIAL_LAST_NAME}    // Changed to use current state
         />
       </Section>
       <Separator />
       <Section>
-        <InputEmail setState={setEmail} stateDefault="new.user@example.com" />
+        <InputEmail 
+          setState={setEmail} 
+          stateDefault={INITIAL_EMAIL}      // Changed to use current state
+        />
       </Section>
       <Separator />
       <Section>
@@ -109,4 +132,4 @@ function RegisterFrom() {
   );
 }
 
-export default RegisterFrom;
+export default RegisterForm;

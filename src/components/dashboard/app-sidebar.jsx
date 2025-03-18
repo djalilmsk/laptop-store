@@ -84,10 +84,10 @@ export function AppSidebar({ ...props }) {
           title: "Orders",
           url: "orders",
         },
-        {
-          title: "Analytics",
-          url: "#",
-        },
+        // {
+        //   title: "Analytics",
+        //   url: "#",
+        // },
         {
           title: "Products",
           url: "products",
@@ -126,7 +126,7 @@ export function AppSidebar({ ...props }) {
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={{ ...user, avatar: "https://github.com/shadcn.png" }} />
+        <NavUser user={{ ...user }} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
