@@ -131,7 +131,7 @@ function InputPassword({
   );
 }
 
-function InputPhoneNumber() {
+function InputPhoneNumber({ name = "phone" }) {
   const [isValid, setIsValid] = useState(true);
 
   const handleInput = (event) => {
@@ -150,7 +150,7 @@ function InputPhoneNumber() {
         pattern="\d{10}"
         maxLength="10"
         id="phone"
-        name="phone"
+        name={name}
         placeholder="phone number"
         onInput={handleInput}
         required
@@ -188,11 +188,11 @@ function SelectionWilaya() {
   );
 }
 
-function InputAddress() {
+function InputAddress({ name = "commune" }) {
   return (
     <div className="flex flex-col gap-2">
       <Label>Address</Label>
-      <Input type="text" name="commune" placeholder="address" required />
+      <Input type="text" name={name} placeholder="address" required />
     </div>
   );
 }

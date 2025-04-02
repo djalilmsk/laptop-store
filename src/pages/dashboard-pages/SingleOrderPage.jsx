@@ -220,7 +220,7 @@ function SingleOrderPage() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Order Actions</DropdownMenuLabel>
+            {/* <DropdownMenuLabel>Order Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuRadioGroup
               value={status}
@@ -245,7 +245,10 @@ function SingleOrderPage() {
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-red-600">
               Delete Order
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
+            <div className="p-5">
+              will be added in the future.
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

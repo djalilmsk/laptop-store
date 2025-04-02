@@ -1,4 +1,4 @@
-import { Bell, ChevronsUpDown, ListOrdered, LogOut, User } from "lucide-react";
+import { Bell, ChevronsUpDown, ListOrdered, LogOut, PackageSearch, User } from "lucide-react";
 
 import {
   DropdownMenuContent,
@@ -81,6 +81,12 @@ function DropdownContentList() {
           <DropdownMenuItem>
             <ListOrdered />
             Orders
+          </DropdownMenuItem>
+        </Link>
+        <Link to={toLink + "products"}>
+          <DropdownMenuItem>
+            <PackageSearch />
+            Products
           </DropdownMenuItem>
         </Link>
       </DropdownMenuGroup>

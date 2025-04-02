@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Dot, Mail, Phone } from "lucide-react";
 
 import { formatNumber } from "libphonenumber-js";
-import { Form } from "react-router-dom";
+import { Form, useActionData, useNavigate } from "react-router-dom";
 import {
   InputAddress,
   InputFullName,
@@ -23,7 +23,60 @@ import {
   SelectionWilaya,
 } from "@/components/customerData/Inputs";
 
+import { redirect } from "react-router-dom";
+import { customFetch } from "../utils";
+import { useToast } from "@/hooks/use-toast";
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const postData = Object.fromEntries(formData);
+
+  console.log({ ...postData, status: "Pending" });
+
+  const URL = "/reports/";
+  try {
+    const response = await customFetch.post(URL, {
+      ...postData,
+      status: "Pending",
+    });
+    const data = response.data;
+
+    if (!data || typeof data !== "object") {
+      throw new Error("Invalid data structure received from the API.");
+    }
+
+    return data;
+  } catch (err) {
+    throw new Error(
+      err || "Failed to fetch data from the server. Please try again later.",
+    );
+    //return null;
+  }
+}
+
 const Contact = () => {
+  const response = useActionData() || null;
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (response) {
+      if (response?.status != 'success') {
+        toast({
+          title: "Error",
+          description: "An unknown error occurred. Try again later.",
+          variant: "destructive",
+        });
+      }
+      toast({
+        title: response.status,
+        description:
+          "Your report has been submitted, and you will receive a response soon.",
+      });
+      navigate("/");
+    }
+  }, [response]);
+
   return (
     <div className="mt-10 flex flex-col items-center justify-center">
       <div className="w-full max-w-sm sm:max-w-3xl">
@@ -82,9 +135,9 @@ const Contact = () => {
                   className="flex flex-col gap-3 lg:col-span-2"
                 >
                   <InputFullName />
-                  <InputPhoneNumber />
+                  <InputPhoneNumber name="phoneNumber" />
                   <SelectionWilaya />
-                  <InputAddress />
+                  <InputAddress name="address" />
                   <InputNote required={true} />
 
                   <Button type="submit">Send Message</Button>

@@ -21,6 +21,7 @@ import { action as loginAction } from "@/components/From/LoginFrom";
 import { action as signupAction } from "@/components/From/RegisterFrom";
 import { action as checkoutAction } from "@/components/From/CheckoutFrom";
 import { action as accountAction } from "@/components/From/DataUpdateFrom";
+import { action as contactAction } from "@/pages/Contact";
 
 // import { loader as checkoutLoader } from "@/pages/Checkout";
 // import { loader as productsLoader } from "@/pages/Products";
@@ -53,8 +54,8 @@ export const homeChildren = [
   {
     path: "/about",
     element: (
-      <div className="flex w-full items-center justify-center py-24 text-6xl">
-        9awed
+      <div className="flex w-full items-center justify-center py-24 text-3xl">
+        will be added in the future.
       </div>
     ),
     errorElement: <ErrorElement />,
@@ -63,7 +64,7 @@ export const homeChildren = [
     path: "/contact",
     element: <Contact />,
     errorElement: <ErrorElement />,
-    // action: contactAction,
+    action: contactAction,
   },
   {
     path: "/cart",
@@ -127,10 +128,19 @@ export const dashboardChildren = [
     errorElement: <ErrorElement />,
   },
   {
+    path: "/user-dashboard/reports",
+    element: (
+      <div className="flex w-full items-center justify-center py-24 text-3xl">
+        will be added in the future.
+      </div>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
     path: "/user-dashboard/account",
     element: <Account />,
     errorElement: <ErrorElement />,
-    action: accountAction(reduxConfig)
+    action: accountAction(reduxConfig),
   },
   {
     path: "/user-dashboard/notification",

@@ -92,6 +92,10 @@ export function AppSidebar({ ...props }) {
           title: "Products",
           url: "products",
         },
+        {
+          title: "Reports",
+          url: "reports",
+        },
       ],
     },
     {
