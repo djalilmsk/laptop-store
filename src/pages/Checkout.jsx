@@ -1,5 +1,5 @@
 import { PaymentSummary } from "@/components";
-import CheckoutForm from "@/components/From/checkoutFrom";
+import CheckoutForm from "@/components/From/CheckoutFrom";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
