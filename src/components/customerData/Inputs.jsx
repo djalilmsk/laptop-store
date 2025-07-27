@@ -22,7 +22,7 @@ import { useDispatch } from "react-redux";
 import { Toggle } from "@radix-ui/react-toggle";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-shipping = [
+const shipping = [
   { "id": 1, "place": "bureau" },
   { "id": 2, "place": "domicile" }
 ]
