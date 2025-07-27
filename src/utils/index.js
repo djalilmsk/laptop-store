@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000/Api/v1";
+const url = "http://localhost:5000/Api/v1";
 
 export const customFetch = axios.create({
   baseURL: url,
