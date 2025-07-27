@@ -34,7 +34,7 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="theme-key">
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </ThemeProvider>
   );

@@ -15,13 +15,17 @@ import {
 
 import { isValidPhoneNumber } from "@/utils";
 import { wilayat } from "@/json/wilayat.json";
-import { shipping } from "@/json/shipping.json";
 
 import { MdOutlineError } from "react-icons/md";
 import { setShipping } from "@/features/reduxSlices/cartSlice";
 import { useDispatch } from "react-redux";
 import { Toggle } from "@radix-ui/react-toggle";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+
+shipping = [
+  { "id": 1, "place": "bureau" },
+  { "id": 2, "place": "domicile" }
+]
 
 function InputFullName({
   defaultValue = "",
